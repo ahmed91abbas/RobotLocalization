@@ -1,19 +1,33 @@
 package model;
-
+import java.util.Random;
 import control.EstimatorInterface;
 
 /*
  *  h running around the compass from 0 to 3 as NORTH-EAST-SOUTH-WEST. 
  */
 public class Localizer implements EstimatorInterface{
-
+	private final static int NORTH = 0;
+	private final static int EAST = 1;
+	private final static int SOUTH = 2;
+	private final static int WEST = 3;
+	
 	private int rows, cols, head;
-
+	private Grid grid;
+	private Robot robot;
 	public Localizer( int rows, int cols, int head) {
 		this.rows = rows;
 		this.cols = cols;
-		this.head = head;	
-	}
+		this.head = head;
+		grid = new Grid(rows, cols); //grid to keep track on where the robot's true position is.
+		
+		//init robot position randomly
+		Random random = new Random();
+		int xStart = random.nextInt(cols);
+		int yStart = random.nextInt(rows);
+		int dir = new Random().nextInt(4);
+		robot = new Robot(xStart, yStart, dir);
+		grid.setValue(xStart, yStart, 1);
+		}
 	
 	@Override
 	public int getNumRows() {
@@ -32,14 +46,13 @@ public class Localizer implements EstimatorInterface{
 
 	@Override
 	public void update() {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
 	@Override
 	public int[] getCurrentTruePosition() {
-		// TODO Auto-generated method stub
-		return null;
+		return robot.getposition();
 	}
 
 	@Override
