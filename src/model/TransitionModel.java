@@ -18,8 +18,11 @@ public class TransitionModel {
 	
 	
 	public int getStateFromPosition(int x, int y, int direction) { //varje x ökar 4. För att komma en rad ner multiplicera med y*cols*4. 
-		return  4*x + direction + 4*(y*cols);
+//		return  4*x + direction + 4*(y*cols);	
+//		return 4*x*cols + 4*y + direction;
+		return direction + x * 4 + y * 4 * (rows+1);
 	}
+	
 	public int[] getPositionFromState(int state) {
 		int y = state / 4*cols; //ex: state= 37   . ... . 37/4*8 == 37 / 32 = 1. Dv rad 1. 77/32=2.4 = 2, dvs rad två!!
 		state -= y*4*cols; //rempve y coord from state
@@ -95,7 +98,7 @@ public class TransitionModel {
 		
 		
 		//the northern wall
-		for (int i = 1; i < cols -1; i++) {
+		for (int i = 1; i <= cols -1; i++) {
 			//N
 			array[getStateFromPosition(0,i,0)][getStateFromPosition(0,i-1,3)] = 1.0/3; //W
 			array[getStateFromPosition(0,i,0)][getStateFromPosition(0,i+1,1)] = 1.0/3; //E
@@ -118,7 +121,7 @@ public class TransitionModel {
 		}
 		
 		//the wall of the south
-		for ( int i = 1; i < cols - 1; i++) {
+		for ( int i = 1; i <= cols - 1; i++) {
 			//N
 			array[getStateFromPosition(rows,i,0)][getStateFromPosition(rows-1,i,0)] = 0.7; //N
 			array[getStateFromPosition(rows,i,0)][getStateFromPosition(rows,i-1,3)] = 0.15; //W
@@ -142,7 +145,7 @@ public class TransitionModel {
 		}
 		
 		//The wall of the west, do not breach
-		for ( int i = 1; i < rows - 1; i++) {
+		for ( int i = 1; i <= rows - 1; i++) {
 			//N
 			array[getStateFromPosition(i,0,0)][getStateFromPosition(i-1,0,0)] = 0.7; //N
 			array[getStateFromPosition(i,0,0)][getStateFromPosition(i,1,1)] = 0.15; //E
@@ -155,8 +158,8 @@ public class TransitionModel {
 			
 			//S
 			array[getStateFromPosition(i,0,2)][getStateFromPosition(i+1,0,2)] = 0.7; //S
-			array[getStateFromPosition(i,0,2)][getStateFromPosition(i-1,0,0)] = 0.7; //N
-			array[getStateFromPosition(i,0,2)][getStateFromPosition(i,1,1)] = 0.7; //E
+			array[getStateFromPosition(i,0,2)][getStateFromPosition(i-1,0,0)] = 0.15; //N
+			array[getStateFromPosition(i,0,2)][getStateFromPosition(i,1,1)] = 0.15; //E
 			
 			//W
 			array[getStateFromPosition(i,0,3)][getStateFromPosition(i-1,0,0)] = 1.0/3; //N
@@ -165,7 +168,7 @@ public class TransitionModel {
 		}
 		
 		//the eastern  wall
-		for (int i = 1; i < rows -1 ; i++) {
+		for (int i = 1; i <= rows -1 ; i++) {
 			//N
 			array[getStateFromPosition(i,cols,0)][getStateFromPosition(i-1,cols,0)] = 0.7; //N
 			array[getStateFromPosition(i,cols,0)][getStateFromPosition(i,cols-1,3)] = 0.15; //W
@@ -187,8 +190,8 @@ public class TransitionModel {
 		}
 		//"Middle of the matrix, rest
 		
-		for( int i = 1; i < rows -1; i++) {
-			for( int j = 1; j < cols -1; j++) {
+		for( int i = 1; i <= rows -1; i++) {
+			for( int j = 1; j <= cols -1; j++) {
 				//N
 				array[getStateFromPosition(i,j,0)][getStateFromPosition(i-1,j,0)] = 0.7; //N
 				array[getStateFromPosition(i,j,0)][getStateFromPosition(i,j+1,1)] = 0.1; //E
