@@ -49,7 +49,6 @@ public class Robot {
 
 	public int[] getposition() {
 		int[] pos = new int[2];
-		System.out.println(x + "   robot  " + y);
 		pos[0] = x;
 		pos[1] = y;
 		return pos;

@@ -17,20 +17,8 @@ public class TransitionModel {
 	} 
 	
 	
-	public int getStateFromPosition(int x, int y, int direction) { //varje x ökar 4. För att komma en rad ner multiplicera med y*cols*4. 
-//		return  4*x + direction + 4*(y*cols);	
-//		return 4*x*cols + 4*y + direction;
+	public int getStateFromPosition(int x, int y, int direction) {
 		return direction + x * 4 + y * 4 * (rows+1);
-	}
-	
-	public int[] getPositionFromState(int state) {
-		int y = state / 4*cols; //ex: state= 37   . ... . 37/4*8 == 37 / 32 = 1. Dv rad 1. 77/32=2.4 = 2, dvs rad två!!
-		state -= y*4*cols; //rempve y coord from state
-		int x = state / 4;
-		state -= state / 4;
-		int direction = state;
-		int[] position = {x,y,direction};
-		return position;
 	}
 	
 	// init the matrix, very jobbigt... puh

@@ -206,8 +206,7 @@ public class SensorModel {
 		yy = y + 2;
 		if (xx >= 0 && yy < cols)
 			ssf.add(new Point(xx,yy));
-		
-		
+
 		return ssf;
 	}
 	

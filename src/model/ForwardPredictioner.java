@@ -21,32 +21,18 @@ public class ForwardPredictioner {
 	}
 
 	public void fUpdate(Matrix O, Matrix T) {
-		System.out.println("O  " + O.getRowDimension());
-		System.out.println("T  " +  T.getRowDimension());
-		Matrix tTransposed = T.transpose();
-		//System.out.println("SIZE OF F " + f.getRowDimension());
-		f = O.times(tTransposed).times(f);
-		//System.out.println("AFTER MUL" + f.getRowDimension());
-
-
 		f = O.times(T.transpose()).times(f);
 		f = normalize(f);
 	}
 
 	public double probForPosition(int x, int y) {
 		double prob = 0.0;
-		double sum = 0;
-
-//		for(int i = 0; i < f.getRowDimension(); i++) {
-//			sum += f.get(i,0);
-//		}
-	//	System.out.println("SUM OF F: " + sum);
 		for(int i = 0; i < 4; i++) {
 			prob += f.get(getStateFromPosition(x,y,i), 0); //snurra runt i rutan ty vi bryr oss inte om direction, addera alla sannolikheter
 		}
-		//System.out.println("PROB FOR" + x + "," +y + " is: " + prob);
 		return prob;
 	}
+	
 	public Matrix normalize(Matrix matrix) {
 		double sum = 0.0;
 			for (int j = 0; j < matrix.getRowDimension(); j++) {
