@@ -47,7 +47,6 @@ public class Localizer implements EstimatorInterface{
 	@Override
 	public void update() {
 		
-		
 	}
 
 	@Override

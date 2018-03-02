@@ -67,16 +67,16 @@ public class Robot {
 				direction = newDir;
 			}
 			switch (direction) {
-			case 0:
+			case NORTH:
 				setY(y - 1);
 				break;
-			case 1:
+			case EAST:
 				setX(x + 1);
 				break;
-			case 2:
+			case SOUTH:
 				setY(y + 1);
 				break;
-			case 3:
+			case WEST:
 				setX(x - 1);
 				break;
 			}
@@ -92,16 +92,16 @@ public class Robot {
 			direction = possibleNewDirections.get(index);
 
 			switch (direction) {
-			case 0:
+			case NORTH:
 				setY(y - 1);
 				break;
-			case 1:
+			case EAST:
 				setX(x + 1);
 				break;
-			case 2:
+			case SOUTH:
 				setY(y + 1);
 				break;
-			case 3:
+			case WEST:
 				setX(x - 1);
 				break;
 			}
