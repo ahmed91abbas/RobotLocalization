@@ -49,6 +49,7 @@ public class Robot {
 
 	public int[] getposition() {
 		int[] pos = new int[2];
+		System.out.println(x +  "   robot  " + y);
 		pos[0] = x;
 		pos[1] = y;
 		return pos;
@@ -68,15 +69,25 @@ public class Robot {
 			}
 			switch (direction) {
 			case NORTH:
-				setY(y - 1);
+				if(y == 0){
+					y = 3;
+				} else {
+					y = y - 1;
+				}
+				setY(y);
 				break;
 			case EAST:
-				setX(x + 1);
+				setX((x + 1) % 4);
 				break;
 			case SOUTH:
-				setY(y + 1);
+				setY((y + 1) % 4);
 				break;
 			case WEST:
+				if(x == 0){
+					x = 3;
+				} else {
+					x = x - 1;
+				}
 				setX(x - 1);
 				break;
 			}
@@ -93,15 +104,25 @@ public class Robot {
 
 			switch (direction) {
 			case NORTH:
-				setY(y - 1);
+				if(y == 0){
+					y = 3;
+				} else {
+					y = y - 1;
+				}
+				setY(y);
 				break;
 			case EAST:
-				setX(x + 1);
+				setX((x + 1) % 4);
 				break;
 			case SOUTH:
-				setY(y + 1);
+				setY((y + 1) % 4);
 				break;
 			case WEST:
+				if(x == 0){
+					x = 3;
+				} else {
+					x = x - 1;
+				}
 				setX(x - 1);
 				break;
 			}
