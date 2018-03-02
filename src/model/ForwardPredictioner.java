@@ -29,6 +29,7 @@ public class ForwardPredictioner {
 
 	public double probForPosition(int x, int y) {
 		double prob = 0.0;
+		System.out.println(f.getRowDimension());
 		for(int i = 0; i < 4; i++) {
 			prob += f.get(getStateFromPosition(x,y ,i), 0); //snurra runt i rutan ty vi bryr oss inte om direction, addera alla sannolikheter
 		}
@@ -36,15 +37,13 @@ public class ForwardPredictioner {
 	}
 	public Matrix normalize(Matrix matrix) {
 		double sum = 0.0;
-		for (int i = 0; i < matrix.getColumnDimension(); i++) {
 			for (int j = 0; j < matrix.getRowDimension(); j++) {
-				sum += matrix.get(i, j);
+				sum += matrix.get(j, 0);
 			}
-		}
-		for (int i = 0; i < matrix.getColumnDimension(); i++) {
+		
 			for (int j = 0; j < matrix.getRowDimension(); j++) {
-				matrix.set(i, j, matrix.get(i, j)/sum);
-			}
+				matrix.set(j, 0, matrix.get(j, 0)/sum);
+			
 		}
 		return matrix;
 	}
