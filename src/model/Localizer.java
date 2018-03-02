@@ -17,7 +17,7 @@ public class Localizer implements EstimatorInterface {
 	private final static int WEST = 3;
 
 	private int rows, cols, head;
-	//private Grid grid;
+	// private Grid grid;
 	private Robot robot;
 	private SensorModel sm;
 
@@ -25,12 +25,13 @@ public class Localizer implements EstimatorInterface {
 	private Matrix Tmatrix;
 	private Random random;
 	private ForwardPredictioner fp;
+	private ArrayList<Integer> manhattanDistance;
 
 	public Localizer(int rows, int cols, int head) {
 		this.rows = rows;
 		this.cols = cols;
 		this.head = head;
-		
+
 		// init T-matrix
 		TModel = new TransitionModel(rows, cols);
 		Tmatrix = TModel.initMatrix();
@@ -44,8 +45,9 @@ public class Localizer implements EstimatorInterface {
 		int yStart = random.nextInt(rows);
 		int dir = new Random().nextInt(4);
 		robot = new Robot(xStart, yStart, dir);
-		//grid.setValue(xStart, yStart, 1);
+		// grid.setValue(xStart, yStart, 1);
 		sm = new SensorModel(rows, cols, head);
+		manhattanDistance = new ArrayList<Integer>();
 	}
 
 	@Override
@@ -102,11 +104,31 @@ public class Localizer implements EstimatorInterface {
 		Point reading = new Point(sensorReading[0], sensorReading[1]);		
 		//update f
 		fp.fUpdate(sm.getMatix(reading), Tmatrix);
+		
+		manhattanDistance.add(manHattan());
+		System.out.println("The average Manhattan distance so far = " + calculateAverage(manhattanDistance));
 	}
-	
-	public int manHattan(int tX, int tY, int sX, int sY) {
-		int yDiff = Math.abs(tY-sY);
-		int xDiff = Math.abs(tX-sX);
+
+	private double calculateAverage(ArrayList<Integer> distances) {
+		double sum = 0.0;
+		if (!distances.isEmpty()) {
+			for (Integer distance : distances) {
+				sum += distance;
+			}
+			return sum / distances.size();
+		}
+		return sum;
+	}
+
+	public int manHattan() {
+		int[] truePos = getCurrentTruePosition();
+		int tX = truePos[0];
+		int tY = truePos[1];
+		int[] sensorPos = getCurrentReading();
+		int sX = sensorPos[0];
+		int sY = sensorPos[1];
+		int yDiff = Math.abs(tY - sY);
+		int xDiff = Math.abs(tX - sX);
 		int totalDist = yDiff + xDiff;
 		return totalDist;
 	}
@@ -135,11 +157,9 @@ public class Localizer implements EstimatorInterface {
 			int y = (int) ssf.get(rand).getY();
 			return new int[] { x, y };
 		}
-		return new int[] {-1,-1};
+		return new int[] { -1, -1 };
 	}
-	
-	
-	
+
 	@Override
 	public double getCurrentProb(int x, int y) {
 		return fp.probForPosition(x, y);
