@@ -2,14 +2,14 @@ package model;
 
 import Jama.Matrix;
 
-public class TransitionMatrix {
+public class TransitionModel {
 	private int rows;
 	private int cols;
 	
 	private int S;
 	private double [][] array;
 	Matrix matrix; 
-	public TransitionMatrix(int rows, int cols) {
+	public TransitionModel(int rows, int cols) {
 		this.rows = rows;
 		this.cols = cols;
 		S  = rows*cols*4;

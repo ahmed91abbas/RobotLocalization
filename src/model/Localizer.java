@@ -1,6 +1,8 @@
 package model;
 
 import java.util.Random;
+
+import Jama.Matrix;
 import control.EstimatorInterface;
 
 /*
@@ -16,14 +18,19 @@ public class Localizer implements EstimatorInterface {
 	private Grid grid;
 	private Robot robot;
 	private SensorModel sm;
-
+	private TransitionModel TModel;
+	private Matrix Tmatrix;
 	public Localizer(int rows, int cols, int head) {
 		this.rows = rows;
 		this.cols = cols;
 		this.head = head;
 		grid = new Grid(rows, cols); // grid to keep track on where the robot's
-										// true position is.
-
+										// true position is. Maybe not necessary
+		
+		//init T-matrix
+		TModel = new TransitionModel(rows, cols);
+		Tmatrix = TModel.initMatrix();
+		
 		// init robot position randomly
 		Random random = new Random();
 		int xStart = random.nextInt(cols);
@@ -78,8 +85,9 @@ public class Localizer implements EstimatorInterface {
 
 	@Override
 	public double getTProb(int x, int y, int h, int nX, int nY, int nH) {
-		// TODO Auto-generated method stub
-		return 0;
+		int stateFrom = TModel.getStateFromPosition(x, y, h);
+		int stateTo = TModel.getStateFromPosition(nX, nY,nH);
+		return Tmatrix.get(stateFrom, stateTo);
 	}
 
 }
