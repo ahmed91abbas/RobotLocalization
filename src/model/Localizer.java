@@ -1,6 +1,8 @@
 package model;
 
 import java.util.Random;
+
+import Jama.Matrix;
 import control.EstimatorInterface;
 
 /*
@@ -16,6 +18,7 @@ public class Localizer implements EstimatorInterface {
 	private Grid grid;
 	private Robot robot;
 	private SensorModel sm;
+	private Matrix o;
 
 	public Localizer(int rows, int cols, int head) {
 		this.rows = rows;
@@ -32,6 +35,7 @@ public class Localizer implements EstimatorInterface {
 		robot = new Robot(xStart, yStart, dir);
 		grid.setValue(xStart, yStart, 1);
 		sm = new SensorModel(rows, cols, head);
+		o = sm.getMatix();
 	}
 
 	@Override
@@ -51,7 +55,7 @@ public class Localizer implements EstimatorInterface {
 
 	@Override
 	public void update() {
-
+		// TODO Auto-generated method stub
 	}
 
 	@Override

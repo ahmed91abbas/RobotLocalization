@@ -21,6 +21,10 @@ public class SensorModel {
 		nbr_readings = rows * cols + 1;
 		o = init_o();
 	}
+	
+	public Matrix getMatix() {
+		return o;
+	}
 
 	private Matrix init_o() {
 		Matrix o = new Matrix(nbr_readings, nbr_states);
