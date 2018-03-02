@@ -120,8 +120,8 @@ public class Localizer implements EstimatorInterface {
 	public int[] getCurrentReading() {
 		int[] truePosition = getCurrentTruePosition();
 		double sensorProb = random.nextDouble();
-		ArrayList<Point> sf = sm.getL1s(truePosition[0], truePosition[1]);
-		ArrayList<Point> ssf = sm.getL2s(truePosition[0], truePosition[1]);
+		ArrayList<Point> sf = sm.getSF(truePosition[0], truePosition[1]);
+		ArrayList<Point> ssf = sm.getSSF(truePosition[0], truePosition[1]);
 		if (sensorProb <= 0.1) {
 			return truePosition;
 		} else if (sensorProb <= 0.1 + 0.05 * sf.size()) {
