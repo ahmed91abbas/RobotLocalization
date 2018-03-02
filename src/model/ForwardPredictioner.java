@@ -16,17 +16,13 @@ public class ForwardPredictioner {
 
 	public void initF() {
 		for (int i = 0; i < S; i++) {
-			System.out.println(S);
 			f.set(i, 0, 1.0/S); // all states are equally possible in beginning
 		}
-		for(int i = 0; i< 64; i++) {
-			System.out.println(f.get(i, 0));
-		}
-		
 	}
 
 	public void fUpdate(Matrix O, Matrix T) {
-
+		System.out.println("O  " + O.getRowDimension());
+		System.out.println("T  " +  T.getRowDimension());
 		Matrix tTransposed = T.transpose();
 		//System.out.println("SIZE OF F " + f.getRowDimension());
 		f = O.times(tTransposed).times(f);
@@ -40,9 +36,6 @@ public class ForwardPredictioner {
 	public double probForPosition(int x, int y) {
 		double prob = 0.0;
 		double sum = 0;
-		
-		System.out.println(f.getRowDimension());
-		System.out.println(f.getColumnDimension());
 
 //		for(int i = 0; i < f.getRowDimension(); i++) {
 //			sum += f.get(i,0);

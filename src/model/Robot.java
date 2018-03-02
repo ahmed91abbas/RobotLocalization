@@ -88,7 +88,7 @@ public class Robot {
 				}
 			}
 			Random random = new Random();
-			int index = random.nextInt(possibleNewDirections.size() + 1);
+			int index = random.nextInt(possibleNewDirections.size());
 			direction = possibleNewDirections.get(index);
 
 			switch (direction) {

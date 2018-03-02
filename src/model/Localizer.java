@@ -98,12 +98,12 @@ public class Localizer implements EstimatorInterface {
 			wallAt[2] = 1;
 		}
 		//updates true position
-		System.out.println("true pos be4: " + getCurrentTruePosition()[0] + " , " + getCurrentTruePosition()[1]);
+//		System.out.println("true pos be4: " + getCurrentTruePosition()[0] + " , " + getCurrentTruePosition()[1]);
 		robot.moveOneStep(facingWall, wallAt);		
 		//get current reading from sensor
 		int[] sensorReading = getCurrentReading();
-		System.out.println("true pos after: " + getCurrentTruePosition()[0] + " , " + getCurrentTruePosition()[1]);
-		System.out.println("sensor reading: " + sensorReading[0] + " , " + sensorReading[1]);
+//		System.out.println("true pos after: " + getCurrentTruePosition()[0] + " , " + getCurrentTruePosition()[1]);
+//		System.out.println("sensor reading: " + sensorReading[0] + " , " + sensorReading[1]);
 		Point reading = new Point(sensorReading[0], sensorReading[1]);		
 		//update f
 		fp.fUpdate(sm.getMatix(reading), Tmatrix);
