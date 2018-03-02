@@ -28,6 +28,10 @@ public class SensorModel {
 			for (int state = 0; state < nbr_states; state++) {
 				int rX = reading % rows;
 				int rY = reading / rows;
+				if (reading == rows * cols) { //filled a matrix, add nothing reading
+					rX = -1;
+					rY = -1;
+				}
 				int x = state / head;
 				int y = state / (head*rows);
 				int h = state % head;
@@ -41,11 +45,11 @@ public class SensorModel {
 	private double calcOrXY(int rX, int rY, int x, int y, int h){
 		if (rX == x && rY == y) //sensor reading equal real location
 			return PtrueLocation;
-		ArrayList<Point> sf = getL1s(rX, rY);
-		if (sf.contains(new Point(x, y))) //in surrounding field
+		ArrayList<Point> sf = getL1s(x, y);
+		if (sf.contains(new Point(rX, rY))) //in surrounding field
 			return PsurroundingFields;
-		ArrayList<Point> ssf = getL2s(rX, rY);
-		if (ssf.contains(new Point(x, y))) //in secoandry surrounding field
+		ArrayList<Point> ssf = getL2s(x, y);
+		if (ssf.contains(new Point(rX, rY))) //in secoandry surrounding field
 			return PsecondarySurroundingFields;
 		if( rX==-1 || rY ==-1) { //reading nothing
 			return 1 - PtrueLocation - sf.size() * PsurroundingFields - ssf.size() * PsecondarySurroundingFields;
@@ -143,5 +147,13 @@ public class SensorModel {
 			}
 		}
 		return l2;
+	}
+	
+	public double getOrXY(int rX, int rY, int x, int y, int h) {
+		int reading = rX + rY*rows;
+		if (rX == -1 && rY == -1)
+			reading = rows * cols;
+		int state = h + x * head + y * head * rows;
+		return o.get(reading, state);
 	}
 }
