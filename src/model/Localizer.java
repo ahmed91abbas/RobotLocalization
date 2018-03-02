@@ -23,8 +23,6 @@ public class Localizer implements EstimatorInterface {
 
 	private TransitionModel TModel;
 	private Matrix Tmatrix;
-
-	private Matrix o;
 	private Random random;
 	private ForwardPredictioner fp;
 
@@ -50,7 +48,6 @@ public class Localizer implements EstimatorInterface {
 		robot = new Robot(xStart, yStart, dir);
 		//grid.setValue(xStart, yStart, 1);
 		sm = new SensorModel(rows, cols, head);
-		o = sm.getMatix();
 	}
 
 	@Override
@@ -100,15 +97,16 @@ public class Localizer implements EstimatorInterface {
 		} else if(robot.getY() == rows) { //bottenvägg
 			wallAt[2] = 1;
 		}
-		robot.moveOneStep(facingWall, wallAt);
-		
-		
+		//updates true position
+		System.out.println("true pos be4: " + getCurrentTruePosition()[0] + " , " + getCurrentTruePosition()[1]);
+		robot.moveOneStep(facingWall, wallAt);		
 		//get current reading from sensor
 		int[] sensorReading = getCurrentReading();
-	
-		
+		System.out.println("true pos after: " + getCurrentTruePosition()[0] + " , " + getCurrentTruePosition()[1]);
+		System.out.println("sensor reading: " + sensorReading[0] + " , " + sensorReading[1]);
+		Point reading = new Point(sensorReading[0], sensorReading[1]);		
 		//update f
-		fp.fUpdate(o, Tmatrix);
+		fp.fUpdate(sm.getMatix(reading), Tmatrix);
 	}
 
 	@Override

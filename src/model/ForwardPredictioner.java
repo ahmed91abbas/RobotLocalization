@@ -23,6 +23,8 @@ public class ForwardPredictioner {
 	}
 
 	public void fUpdate(Matrix O, Matrix T) {
+		System.out.println("O dim: " + O.getRowDimension());
+		System.out.println("T dim: " + T.getRowDimension());
 		f = O.times(T.transpose()).times(f);
 		f = normalize(f);
 	}
@@ -48,7 +50,7 @@ public class ForwardPredictioner {
 		return matrix;
 	}
 	public int getStateFromPosition(int x, int y, int direction) { //varje x ökar 4. För att komma en rad ner multiplicera med y*cols*4. 
-		return  4*x + direction + 4*(y*cols);
+		return direction + x * 4 + y * 4 * rows;
 	}
 
 }
