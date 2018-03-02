@@ -62,7 +62,7 @@ public class SensorModel {
 	}
 	
 	
-	private ArrayList<Point> getL1s(int x, int y) {
+	public ArrayList<Point> getL1s(int x, int y) {
 		ArrayList<Point> l1 = new ArrayList<Point>();
 		if (x == 0 && y == 0) { // vänster topphörn
 			l1.add(new Point(0, 1));
@@ -127,7 +127,7 @@ public class SensorModel {
 		return l1;
 	}
 
-	private ArrayList<Point> getL2s(int x, int y) {
+	public ArrayList<Point> getL2s(int x, int y) {
 		ArrayList<Point> l2 = new ArrayList<Point>();
 		Point p;
 		for (int i = 0; i < 5; i++) { //rader

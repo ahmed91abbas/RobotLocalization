@@ -1,5 +1,7 @@
 package model;
 
+import java.awt.Point;
+import java.util.ArrayList;
 import java.util.Random;
 
 import Jama.Matrix;
@@ -19,6 +21,7 @@ public class Localizer implements EstimatorInterface {
 	private Robot robot;
 	private SensorModel sm;
 	private Matrix o;
+	private Random random;
 
 	public Localizer(int rows, int cols, int head) {
 		this.rows = rows;
@@ -28,7 +31,7 @@ public class Localizer implements EstimatorInterface {
 										// true position is.
 
 		// init robot position randomly
-		Random random = new Random();
+		random = new Random();
 		int xStart = random.nextInt(cols);
 		int yStart = random.nextInt(rows);
 		int dir = new Random().nextInt(4);
@@ -65,7 +68,23 @@ public class Localizer implements EstimatorInterface {
 
 	@Override
 	public int[] getCurrentReading() {
-		// TODO Auto-generated method stub
+		int[] truePosition = getCurrentTruePosition();
+		double sensorProb = random.nextDouble();
+		ArrayList<Point> sf = sm.getL1s(truePosition[0], truePosition[1]);
+		ArrayList<Point> ssf = sm.getL2s(truePosition[0], truePosition[1]);
+		if (sensorProb <= 0.1) {
+			return truePosition;
+		} else if (sensorProb <= 0.1 + 0.05 * sf.size()) {
+			int rand = random.nextInt(sf.size());
+			int x = (int) sf.get(rand).getX();
+			int y = (int) sf.get(rand).getY();
+			return new int[]{x, y};
+		} else if (sensorProb <= 0.1 + 0.05 * sf.size() + 0.025 * ssf.size()) {
+			int rand = random.nextInt(ssf.size());
+			int x = (int) ssf.get(rand).getX();
+			int y = (int) ssf.get(rand).getY();
+			return new int[]{x, y};
+		}
 		return null;
 	}
 
