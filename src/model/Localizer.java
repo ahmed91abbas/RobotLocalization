@@ -135,7 +135,7 @@ public class Localizer implements EstimatorInterface {
 			int y = (int) ssf.get(rand).getY();
 			return new int[] { x, y };
 		}
-		return null;
+		return new int[] {-1,-1};
 	}
 
 	@Override
