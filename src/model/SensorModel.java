@@ -36,7 +36,7 @@ public class SensorModel {
 					rX = -1;
 					rY = -1;
 				}
-				int x = state / head;
+				int x = state % (head * rows) / head;
 				int y = state / (head*rows);
 				int h = state % head;
 				double value = calcOrXY(rX, rY, x, y, h);
