@@ -47,7 +47,7 @@ public interface EstimatorInterface {
 	 * view somewhat unclear.
 	 */
 	public double getCurrentProb( int x, int y);
-
+	
 	/*
 	 * returns the entry of your observation matrix corresponding to the probability 
 	 * of getting the sensor reading r expressed as 
