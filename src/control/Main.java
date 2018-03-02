@@ -11,7 +11,6 @@ public class Main {
 	 */
 	
 	public static void main( String[] args) {
-		
 		/*
 		 * generate you own localiser / estimator wrapper here to plug it into the 
 		 * graphics class.
