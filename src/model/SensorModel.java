@@ -22,8 +22,22 @@ public class SensorModel {
 		o = init_o();
 	}
 	
-	public Matrix getMatix() {
-		return o;
+	public Matrix getMatix(Point point) {
+		int index = (int) (point.getX() + point.getY() * rows);
+		if (point.getX() == -1 || point.getY() == -1)
+			index = rows * cols;
+		
+		double[] diagonal = new double[nbr_states];
+
+		for (int i = 0; i < nbr_states; i++)
+				diagonal[i] = o.get(index,i);
+
+		Matrix m = new Matrix(nbr_states, nbr_states);
+		
+		for (int row = 0; row < nbr_states; row ++)
+			for (int col = 0; col < nbr_states; col ++)
+				m.set(row, col, (row == col) ? diagonal[row] : 0.0);
+		return m;
 	}
 
 	private Matrix init_o() {

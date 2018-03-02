@@ -26,15 +26,14 @@ public class ForwardPredictioner {
 	}
 
 	public void fUpdate(Matrix O, Matrix T) {
-		if(O.getColumnDimension() != T.getRowDimension()) {
-			System.out.println("THIS SOME WRING on so many levels");
-			System.exit(1);
-		}
+
 		Matrix tTransposed = T.transpose();
 		//System.out.println("SIZE OF F " + f.getRowDimension());
 		f = O.times(tTransposed).times(f);
 		//System.out.println("AFTER MUL" + f.getRowDimension());
 
+
+		f = O.times(T.transpose()).times(f);
 		f = normalize(f);
 	}
 
@@ -68,7 +67,7 @@ public class ForwardPredictioner {
 		return matrix;
 	}
 	public int getStateFromPosition(int x, int y, int direction) { //varje x ökar 4. För att komma en rad ner multiplicera med y*cols*4. 
-		return  4*x + direction + 4*(y*cols);
+		return direction + x * 4 + y * 4 * rows;
 	}
 
 }
