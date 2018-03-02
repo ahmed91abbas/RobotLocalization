@@ -108,6 +108,13 @@ public class Localizer implements EstimatorInterface {
 		//update f
 		fp.fUpdate(sm.getMatix(reading), Tmatrix);
 	}
+	
+	public int manHattan(int tX, int tY, int sX, int sY) {
+		int yDiff = Math.abs(tY-sY);
+		int xDiff = Math.abs(tX-sX);
+		int totalDist = yDiff + xDiff;
+		return totalDist;
+	}
 
 	@Override
 	public int[] getCurrentTruePosition() {
@@ -135,7 +142,9 @@ public class Localizer implements EstimatorInterface {
 		}
 		return new int[] {-1,-1};
 	}
-
+	
+	
+	
 	@Override
 	public double getCurrentProb(int x, int y) {
 		return fp.probForPosition(x, y);
